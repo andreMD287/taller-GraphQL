@@ -1,0 +1,18 @@
+{
+  "name": "graphql-demo",
+  "version": "1.0.0",
+  "description": "Demo GraphQL — Introducción a Sistemas Distribuidos",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "graphql": "^16.9.0",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.16.0",
+    "ws": "^8.18.0"
+  }
+}
