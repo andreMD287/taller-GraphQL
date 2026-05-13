@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -87,6 +87,13 @@
         border-color: var(--pink);
         color: var(--pink);
         background: rgba(229, 53, 171, 0.1);
+      }
+      .nav-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        border-color: var(--border);
+        color: var(--muted);
+        background: none;
       }
       #slide-counter {
         font-family: "JetBrains Mono", monospace;
@@ -186,6 +193,60 @@
         user-select: text;
         cursor: text;
       }
+      .exercise-check {
+        width: 100%;
+        max-width: 960px;
+        margin-top: 20px;
+      }
+      .answer-box {
+        width: 100%;
+        min-height: 150px;
+        margin-top: 12px;
+        resize: vertical;
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        padding: 14px 16px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      .answer-box:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+      .check-btn {
+        margin-top: 12px;
+        background: rgba(0, 212, 255, 0.12);
+        border: 1px solid var(--cyan);
+        color: var(--cyan);
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .check-btn:disabled {
+        opacity: 0.55;
+        cursor: default;
+      }
+      .exercise-feedback {
+        min-height: 20px;
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .exercise-feedback.pending {
+        color: var(--yellow);
+      }
+      .exercise-feedback.success {
+        color: var(--green);
+      }
+      .exercise-feedback.error {
+        color: var(--red);
+      }
       .kw {
         color: #c792ea;
       }
@@ -227,6 +288,32 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
+      }
+      .distributed-layout {
+        width: 100%;
+        max-width: 1280px;
+        display: grid;
+        grid-template-columns: 1.35fr 0.9fr;
+        gap: 28px;
+        align-items: stretch;
+      }
+      .distributed-visual {
+        min-height: 520px;
+        padding: 18px 22px;
+      }
+      .distributed-notes {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 16px;
+      }
+      .distributed-note {
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--text);
+      }
+      .distributed-note strong {
+        color: var(--cyan);
       }
 
       /* Quiz */
@@ -324,6 +411,31 @@
         color: var(--red);
         margin-top: 10px;
       }
+      .tip-card {
+        background: linear-gradient(
+          180deg,
+          rgba(0, 255, 136, 0.12),
+          rgba(0, 255, 136, 0.05)
+        );
+        border: 1px solid rgba(0, 255, 136, 0.28);
+        border-left: 4px solid var(--green);
+      }
+      .tip-card-title {
+        font-family: "Syne", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--green);
+        margin-bottom: 10px;
+      }
+      .tip-card-text {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text);
+      }
+      .tip-card code {
+        color: var(--yellow);
+        font-size: 0.95em;
+      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -347,7 +459,7 @@
     <div id="progress-bar"></div>
 
     <div id="slides">
-      <!-- ═══════════════ SLIDE 0: PORTADA ═══════════════ -->
+      <!-- --------------- SLIDE 0: PORTADA --------------- -->
       <div class="slide active" id="s0">
         <div class="section-tag">Taller Práctico · 20 min</div>
         <h1 class="big-title">GraphQL</h1>
@@ -381,9 +493,9 @@
         </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 1: PREPARACIÓN ═══════════════ -->
+      <!-- --------------- SLIDE 1: PREPARACIÓN --------------- -->
       <div class="slide" id="s1">
-        <div class="section-tag">⚙️ Setup Inicial</div>
+        <div class="section-tag">?? Setup Inicial</div>
         <h2 style="font-size: 36px; margin-bottom: 10px">
           Antes de empezar...
         </h2>
@@ -424,12 +536,12 @@
           </div>
         </div>
         <p style="margin-top: 15px; font-size: 14px; color: var(--cyan)">
-          ✅ Si ves el sandbox, estás listo. ¡Manos a la obra!
+          ? Si ves el sandbox, estás listo. ¡Manos a la obra!
         </p>
       </div>
 
-      <!-- ═══════════════ SLIDE 2: QUERY SIMPLE ═══════════════ -->
-      <div class="slide" id="s2">
+      <!-- --------------- SLIDE 2: QUERY SIMPLE --------------- -->
+      <div class="slide" id="s2" data-requires-check="true">
         <div class="section-tag">Ejercicio 1 — Query Básica</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">
           Tu primera consulta
@@ -450,17 +562,17 @@
             </div>
             <div class="step-title" style="margin-top: 15px">
               <span class="step-number">2</span> Presiona
-              <span style="color: var(--green)">▶ Run</span>
+              <span style="color: var(--green)">? Run</span>
             </div>
             <div class="objective">
-              🎯 Objetivo: Entender que GraphQL devuelve
+              ?? Objetivo: Entender que GraphQL devuelve
               <strong>exactamente</strong> los campos que pedimos.
             </div>
           </div>
           <div class="card" style="border: 1px solid var(--border)">
             <div class="step-title" style="color: var(--green)">
               <span class="step-number" style="background: var(--green)"
-                >✓</span
+                >?</span
               >
               Resultado esperado
             </div>
@@ -477,13 +589,26 @@
           </div>
         </div>
         <p style="font-size: 14px; color: var(--pink); margin-top: 15px">
-          💡 Nota: No importa cuántos campos tenga "Libro" en el servidor. Solo
+          ?? Nota: No importa cuántos campos tenga "Libro" en el servidor. Solo
           recibes lo que pides.
         </p>
+        <div class="card exercise-check">
+          <div class="step-title">
+            <span class="step-number" style="background: var(--cyan)">3</span>
+            Pega aqui el resultado para desbloquear el avance
+          </div>
+          <textarea
+            class="answer-box"
+            data-exercise="s2"
+            placeholder='Pega el JSON de respuesta de esta query'
+          ></textarea>
+          <button class="check-btn" data-check="s2">Validar resultado</button>
+          <div class="exercise-feedback" id="feedback-s2"></div>
+        </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 3: MÁS CAMPOS ═══════════════ -->
-      <div class="slide" id="s3">
+      <!-- --------------- SLIDE 3: MÁS CAMPOS --------------- -->
+      <div class="slide" id="s3" data-requires-check="true">
         <div class="section-tag">Ejercicio 2 — Flexibilidad</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">
           Agregando y quitando campos
@@ -513,7 +638,7 @@
               } }
             </div>
             <p style="font-size: 13px; color: var(--cyan); margin-top: 10px">
-              🔥 <strong>Mini reto:</strong> Modifica la query para pedir
+              ?? <strong>Mini reto:</strong> Modifica la query para pedir
               <strong>solo</strong> el campo <code>id</code>.
             </p>
           </div>
@@ -522,14 +647,27 @@
           class="objective"
           style="margin-top: 20px; text-align: center; font-size: 15px"
         >
-          🎯 Objetivo: Demostrar que
+          ?? Objetivo: Demostrar que
           <strong>no existe versionamiento de API</strong> (nada de /v1/, /v2/).
           Evolucionas sin romper nada.
         </div>
+        <div class="card exercise-check">
+          <div class="step-title">
+            <span class="step-number" style="background: var(--cyan)">3</span>
+            Pega la respuesta del mini reto con solo el campo id
+          </div>
+          <textarea
+            class="answer-box"
+            data-exercise="s3"
+            placeholder='Pega la respuesta de la query donde pediste solo id'
+          ></textarea>
+          <button class="check-btn" data-check="s3">Validar resultado</button>
+          <div class="exercise-feedback" id="feedback-s3"></div>
+        </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 4: FILTROS ═══════════════ -->
-      <div class="slide" id="s4">
+      <!-- --------------- SLIDE 4: FILTROS --------------- -->
+      <div class="slide" id="s4" data-requires-check="true">
         <div class="section-tag">Ejercicio 3 — Argumentos</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">
           Filtrando datos desde el cliente
@@ -553,7 +691,7 @@
           <div class="card">
             <div class="step-title" style="color: var(--yellow)">
               <span class="step-number" style="background: var(--yellow)"
-                >💡</span
+                >??</span
               >
               ¿Qué pasó?
             </div>
@@ -563,15 +701,28 @@
               schema.
             </p>
             <p style="font-size: 14px; margin-top: 10px; color: var(--cyan)">
-              🔥 <strong>Mini reto:</strong> Cambia el género a
+              ?? <strong>Mini reto:</strong> Cambia el género a
               <code>CIENCIA_FICCION</code> y observa la diferencia.
             </p>
           </div>
         </div>
+        <div class="card exercise-check">
+          <div class="step-title">
+            <span class="step-number" style="background: var(--cyan)">2</span>
+            Pega la respuesta del reto con CIENCIA_FICCION
+          </div>
+          <textarea
+            class="answer-box"
+            data-exercise="s4"
+            placeholder='Pega la respuesta filtrada por CIENCIA_FICCION'
+          ></textarea>
+          <button class="check-btn" data-check="s4">Validar resultado</button>
+          <div class="exercise-feedback" id="feedback-s4"></div>
+        </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 5: MUTATION ═══════════════ -->
-      <div class="slide" id="s5">
+      <!-- --------------- SLIDE 5: MUTATION --------------- -->
+      <div class="slide" id="s5" data-requires-check="true">
         <div class="section-tag">Ejercicio 4 — Mutation</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">Modificando datos</h2>
         <p style="margin-bottom: 10px; font-size: 14px; color: var(--muted)">
@@ -602,7 +753,7 @@
           <div class="card">
             <div class="step-title" style="color: var(--green)">
               <span class="step-number" style="background: var(--green)"
-                >✓</span
+                >?</span
               >
               Después de ejecutar
             </div>
@@ -613,14 +764,27 @@
               agregado.
             </p>
             <p style="font-size: 14px; margin-top: 10px; color: var(--cyan)">
-              🔥 <strong>Mini reto:</strong> Agrega un libro con tus datos
+              ?? <strong>Mini reto:</strong> Agrega un libro con tus datos
               ficticios.
             </p>
           </div>
         </div>
+        <div class="card exercise-check">
+          <div class="step-title">
+            <span class="step-number" style="background: var(--cyan)">2</span>
+            Pega la respuesta de la mutation
+          </div>
+          <textarea
+            class="answer-box"
+            data-exercise="s5"
+            placeholder='Pega la respuesta de agregarLibro'
+          ></textarea>
+          <button class="check-btn" data-check="s5">Validar resultado</button>
+          <div class="exercise-feedback" id="feedback-s5"></div>
+        </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 6: SUBSCRIPTION ═══════════════ -->
+      <!-- --------------- SLIDE 6: SUBSCRIPTION --------------- -->
       <div class="slide" id="s6">
         <div class="section-tag">Ejercicio 5 — Tiempo Real</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">
@@ -635,8 +799,8 @@
         <div class="grid-2" style="max-width: 960px">
           <div>
             <div class="step-title">
-              <span class="step-number">1</span> Abre una
-              <strong>nueva pestaña</strong> en el Sandbox
+              <span class="step-number">1</span> En una pestaña nueva del
+              Sandbox, deja corriendo esta subscription
             </div>
             <div class="code-block" style="font-size: 12px">
               <span class="kw">subscription</span> {
@@ -659,13 +823,33 @@
           </div>
         </div>
         <div class="objective" style="margin-top: 20px">
-          🎯 Objetivo: Entender que GraphQL usa WebSocket para datos en tiempo
+          ?? Objetivo: Entender que GraphQL usa WebSocket para datos en tiempo
           real (chats, notificaciones, dashboards).
+        </div>
+        <div class="card exercise-check" style="border-left: 4px solid var(--cyan)">
+          <div class="step-title" style="color: var(--cyan)">
+            <span class="step-number" style="background: var(--cyan)">3</span>
+            Resultado esperado para explicar en clase
+          </div>
+          <div class="code-block" style="font-size: 11px">
+            {
+            <span class="str">"data"</span>: {
+            <span class="str">"libroAgregado"</span>: {
+            <span class="str">"id"</span>: <span class="str">"1712345678901"</span>,
+            <span class="str">"titulo"</span>: <span class="str">"Docker para Devs"</span>,
+            <span class="str">"autor"</span>: <span class="str">"Juan Pérez"</span>
+            } } }
+          </div>
+          <p style="font-size: 14px; line-height: 1.6; margin-top: 12px; color: var(--muted)">
+            La idea es mostrar que, cuando otra pestaña ejecuta una mutation que
+            agrega un libro, esta vista recibe el evento automáticamente sin
+            volver a presionar <code>Run</code>.
+          </p>
         </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 7: INTROSPECTION ═══════════════ -->
-      <div class="slide" id="s7">
+      <!-- --------------- SLIDE 7: INTROSPECTION --------------- -->
+      <div class="slide" id="s7" data-requires-check="true">
         <div class="section-tag">Ejercicio 6 — Introspection</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">
           El API se documenta solo
@@ -692,16 +876,29 @@
             </p>
           </div>
         </div>
+        <div class="card exercise-check">
+          <div class="step-title">
+            <span class="step-number" style="background: var(--cyan)">2</span>
+            Pega una parte de la introspection
+          </div>
+          <textarea
+            class="answer-box"
+            data-exercise="s7"
+            placeholder='Pega una respuesta donde aparezcan tipos del schema'
+          ></textarea>
+          <button class="check-btn" data-check="s7">Validar resultado</button>
+          <div class="exercise-feedback" id="feedback-s7"></div>
+        </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 8: ERRORES COMUNES ═══════════════ -->
+      <!-- --------------- SLIDE 8: ERRORES COMUNES --------------- -->
       <div class="slide" id="s8">
-        <div class="section-tag">⚠️ Errores Comunes</div>
+        <div class="section-tag">?? Errores Comunes</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">Qué NO hacer</h2>
         <div class="grid-2" style="max-width: 900px">
           <div class="card">
             <p style="font-size: 13px; color: var(--red)">
-              ❌ Pedir un campo que no existe en el schema
+              ? Pedir un campo que no existe en el schema
             </p>
             <div class="code-block" style="font-size: 11px; margin-top: 5px">
               <span class="comment"># "precio" no existe en Libro</span> {
@@ -710,7 +907,7 @@
           </div>
           <div class="card">
             <p style="font-size: 13px; color: var(--red)">
-              ❌ Olvidar las llaves de cierre
+              ? Olvidar las llaves de cierre
             </p>
             <div class="code-block" style="font-size: 11px; margin-top: 5px">
               { libros { titulo }
@@ -718,191 +915,255 @@
           </div>
           <div class="card">
             <p style="font-size: 13px; color: var(--red)">
-              ❌ Usar mutation en una query
+              ? Usar mutation en una query
             </p>
             <div class="code-block" style="font-size: 11px; margin-top: 5px">
               <span class="kw">query</span> {
               <span class="field">agregarLibro</span>(...) }
             </div>
           </div>
-          <div class="card">
-            <p style="font-size: 13px; color: var(--green)">
-              ✅ Recuerda: GraphQL siempre responde HTTP 200. Los errores vienen
-              dentro del JSON, en el campo <code>"errors"</code>.
+          <div class="card tip-card">
+            <div class="tip-card-title">Importante</div>
+            <p class="tip-card-text">
+              GraphQL normalmente responde con <code>HTTP 200</code> incluso
+              cuando la operación tiene errores.
+            </p>
+            <p class="tip-card-text" style="margin-top: 10px">
+              Lo que debes revisar es el campo <code>"errors"</code> dentro del
+              JSON de respuesta.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 9: SISTEMAS DISTRIBUIDOS ═══════════════ -->
+      <!-- --------------- SLIDE 9: SISTEMAS DISTRIBUIDOS --------------- -->
       <div class="slide" id="s9">
         <div class="section-tag">Conexión con la materia</div>
         <h2 style="font-size: 34px; margin-bottom: 15px">
           GraphQL en Sistemas Distribuidos
         </h2>
-        <div style="text-align: center; max-width: 800px">
-          <svg
-            viewBox="0 0 800 280"
-            width="100%"
-            style="display: block; margin-bottom: 20px"
-          >
+        <div class="distributed-layout">
+          <div class="card distributed-visual">
+            <svg
+              viewBox="0 0 920 420"
+              width="100%"
+              height="100%"
+              style="display: block"
+            >
             <rect
-              x="300"
-              y="110"
-              width="200"
-              height="60"
-              rx="10"
-              fill="#1d1030"
-              stroke="#e535ab"
+              x="40"
+              y="95"
+              width="165"
+              height="70"
+              rx="12"
+              fill="#101a26"
+              stroke="#00d4ff"
               stroke-width="2"
             />
             <text
-              x="400"
-              y="135"
+              x="122"
+              y="123"
+              text-anchor="middle"
+              fill="#00d4ff"
+              font-size="16"
+              font-weight="bold"
+            >
+              Web / Mobile
+            </text>
+            <text
+              x="122"
+              y="145"
+              text-anchor="middle"
+              fill="#9cb3c9"
+              font-size="12"
+            >
+              Clientes
+            </text>
+
+            <rect
+              x="315"
+              y="150"
+              width="260"
+              height="92"
+              rx="16"
+              fill="#1d1030"
+              stroke="#e535ab"
+              stroke-width="3"
+            />
+            <text
+              x="445"
+              y="184"
               text-anchor="middle"
               fill="#e535ab"
-              font-size="12"
+              font-size="20"
               font-weight="bold"
             >
               GraphQL Gateway
             </text>
             <text
-              x="400"
-              y="155"
+              x="445"
+              y="212"
               text-anchor="middle"
               fill="#7878a0"
-              font-size="10"
+              font-size="14"
             >
-              Único punto de entrada
+              Unifica datos y expone un solo endpoint
             </text>
 
             <line
-              x1="200"
-              y1="90"
-              x2="300"
-              y2="120"
+              x1="205"
+              y1="130"
+              x2="315"
+              y2="182"
               stroke="#00d4ff"
-              stroke-width="1.5"
-              stroke-dasharray="4,3"
+              stroke-width="2.5"
+              stroke-dasharray="8,6"
             />
-            <text
-              x="190"
-              y="80"
-              text-anchor="middle"
-              fill="#e8e8f0"
-              font-size="11"
-            >
-              Clientes
-            </text>
 
             <line
-              x1="500"
-              y1="100"
-              x2="580"
-              y2="70"
+              x1="575"
+              y1="173"
+              x2="700"
+              y2="95"
               stroke="#00d4ff"
-              stroke-width="1.5"
+              stroke-width="2.5"
             />
             <rect
-              x="580"
-              y="45"
-              width="150"
-              height="50"
-              rx="6"
+              x="700"
+              y="55"
+              width="180"
+              height="70"
+              rx="12"
               fill="#0d1a2a"
               stroke="#00d4ff"
-              stroke-width="1"
+              stroke-width="2"
             />
             <text
-              x="655"
-              y="70"
+              x="790"
+              y="85"
               text-anchor="middle"
               fill="#00d4ff"
-              font-size="11"
+              font-size="16"
+              font-weight="bold"
             >
               Users Service
             </text>
+            <text
+              x="790"
+              y="106"
+              text-anchor="middle"
+              fill="#9cb3c9"
+              font-size="12"
+            >
+              perfiles, autenticación
+            </text>
 
             <line
-              x1="500"
-              y1="140"
-              x2="580"
-              y2="145"
+              x1="575"
+              y1="196"
+              x2="700"
+              y2="196"
               stroke="#00d4ff"
-              stroke-width="1.5"
+              stroke-width="2.5"
             />
             <rect
-              x="580"
-              y="120"
-              width="150"
-              height="50"
-              rx="6"
+              x="700"
+              y="160"
+              width="180"
+              height="70"
+              rx="12"
               fill="#0d1a2a"
               stroke="#00d4ff"
-              stroke-width="1"
+              stroke-width="2"
             />
             <text
-              x="655"
-              y="145"
+              x="790"
+              y="190"
               text-anchor="middle"
               fill="#00d4ff"
-              font-size="11"
+              font-size="16"
+              font-weight="bold"
             >
               Products Service
             </text>
+            <text
+              x="790"
+              y="211"
+              text-anchor="middle"
+              fill="#9cb3c9"
+              font-size="12"
+            >
+              catálogo, inventario
+            </text>
 
             <line
-              x1="500"
-              y1="180"
-              x2="580"
-              y2="210"
+              x1="575"
+              y1="220"
+              x2="700"
+              y2="300"
               stroke="#00d4ff"
-              stroke-width="1.5"
+              stroke-width="2.5"
             />
             <rect
-              x="580"
-              y="185"
-              width="150"
-              height="50"
-              rx="6"
+              x="700"
+              y="270"
+              width="180"
+              height="70"
+              rx="12"
               fill="#0d1a2a"
               stroke="#00d4ff"
-              stroke-width="1"
+              stroke-width="2"
             />
             <text
-              x="655"
-              y="210"
+              x="790"
+              y="300"
               text-anchor="middle"
               fill="#00d4ff"
-              font-size="11"
+              font-size="16"
+              font-weight="bold"
             >
               Notifications
             </text>
+            <text
+              x="790"
+              y="321"
+              text-anchor="middle"
+              fill="#9cb3c9"
+              font-size="12"
+            >
+              eventos en tiempo real
+            </text>
           </svg>
-          <p
-            style="
-              font-size: 14px;
-              line-height: 1.6;
-              color: var(--muted);
-              text-align: left;
-            "
-          >
-            <strong style="color: var(--cyan)"
-              >GraphQL actúa como middleware:</strong
-            ><br />
-            • <strong>Transparencia:</strong> El cliente no sabe que hay
-            múltiples servicios detrás.<br />
-            • <strong>Agregación:</strong> Una sola query puede unir datos de
-            Users, Products y Notifications.<br />
-            • <strong>Reducción de tráfico:</strong> Menos viajes de red. Sin
-            over-fetching ni under-fetching.
-          </p>
+          </div>
+          <div class="distributed-notes">
+            <div class="card">
+              <p class="distributed-note">
+                <strong>GraphQL actúa como middleware:</strong> el cliente no
+                necesita conocer cuántos servicios hay detrás ni cómo se
+                comunican entre sí.
+              </p>
+            </div>
+            <div class="card">
+              <p class="distributed-note">
+                <strong>Agregación de datos:</strong> una sola query puede unir
+                información de usuarios, productos y notificaciones sin hacer
+                varias llamadas separadas.
+              </p>
+            </div>
+            <div class="card">
+              <p class="distributed-note">
+                <strong>Menos tráfico y menos acoplamiento:</strong> reduces
+                viajes de red, eliminas over-fetching y mantienes un contrato
+                único frente al cliente.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 10: QUIZ ═══════════════ -->
+      <!-- --------------- SLIDE 10: QUIZ --------------- -->
       <div class="slide" id="s10">
-        <div class="section-tag">🎯 Quiz Rápido</div>
+        <div class="section-tag">?? Quiz Rápido</div>
         <h2 style="font-size: 36px; margin-bottom: 10px">¿Qué aprendiste?</h2>
         <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px">
           Haz clic en la respuesta correcta de cada pregunta.
@@ -995,7 +1256,7 @@
         </div>
       </div>
 
-      <!-- ═══════════════ SLIDE 11: CIERRE ═══════════════ -->
+      <!-- --------------- SLIDE 11: CIERRE --------------- -->
       <div class="slide" id="s11">
         <div class="section-tag">Resumen</div>
         <h1
@@ -1006,26 +1267,26 @@
         </h1>
         <div class="grid-2" style="max-width: 800px">
           <div class="card" style="border-left: 4px solid var(--pink)">
-            <strong style="color: var(--pink)">① Pide lo que necesitas</strong
+            <strong style="color: var(--pink)">? Pide lo que necesitas</strong
             ><br /><span style="font-size: 13px; color: var(--muted)"
               >El cliente controla la respuesta. Adiós
               over/under-fetching.</span
             >
           </div>
           <div class="card" style="border-left: 4px solid var(--cyan)">
-            <strong style="color: var(--cyan)">② Un solo endpoint</strong
+            <strong style="color: var(--cyan)">? Un solo endpoint</strong
             ><br /><span style="font-size: 13px; color: var(--muted)"
               >POST /graphql para leer, escribir y tiempo real.</span
             >
           </div>
           <div class="card" style="border-left: 4px solid var(--green)">
-            <strong style="color: var(--green)">③ Schema como contrato</strong
+            <strong style="color: var(--green)">? Schema como contrato</strong
             ><br /><span style="font-size: 13px; color: var(--muted)"
               >Documentación viva. Equipos alineados.</span
             >
           </div>
           <div class="card" style="border-left: 4px solid var(--yellow)">
-            <strong style="color: var(--yellow)">④ Ideal para distribuir</strong
+            <strong style="color: var(--yellow)">? Ideal para distribuir</strong
             ><br /><span style="font-size: 13px; color: var(--muted)"
               >Gateway que unifica microservicios heterogéneos.</span
             >
@@ -1036,38 +1297,122 @@
 
     <!-- NAVEGACIÓN -->
     <nav id="nav">
-      <button class="nav-btn" onclick="prevSlide()">← Anterior</button>
+      <button class="nav-btn" onclick="prevSlide()">? Anterior</button>
       <span id="slide-counter">1 / 12</span>
-      <button class="nav-btn" onclick="nextSlide()">Siguiente →</button>
+      <button class="nav-btn" onclick="nextSlide()">Siguiente ?</button>
     </nav>
 
     <script>
       const slides = document.querySelectorAll(".slide");
       const totalSlides = slides.length;
       let currentSlide = 0;
+      const navButtons = document.querySelectorAll(".nav-btn");
+      const prevBtn = navButtons[0];
+      const nextBtn = navButtons[1];
+      const completedExercises = new Set();
+
+      function normalizeText(value) {
+        return value
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      const exerciseValidators = {
+        s2: {
+          success: "Resultado correcto. Ya puedes avanzar.",
+          test: (text) =>
+            text.includes("libros") &&
+            text.includes("el problema de los tres cuerpos") &&
+            text.includes("liu cixin"),
+        },
+        s3: {
+          success: "Respuesta valida. Ya puedes avanzar.",
+          test: (text) =>
+            text.includes("libros") &&
+            text.includes("id") &&
+            !text.includes("titulo") &&
+            !text.includes("autor") &&
+            !text.includes("paginas") &&
+            !text.includes("genero"),
+        },
+        s4: {
+          success: "Filtro correcto. Ya puedes avanzar.",
+          test: (text) =>
+            text.includes("librosporgenero") &&
+            text.includes("el problema de los tres cuerpos") &&
+            text.includes("dune"),
+        },
+        s5: {
+          success: "Mutation valida. Ya puedes avanzar.",
+          test: (text) =>
+            text.includes("agregarlibro") &&
+            text.includes("docker para devs") &&
+            text.includes("id"),
+        },
+        s7: {
+          success: "Introspection validada. Ya puedes avanzar.",
+          test: (text) =>
+            (text.includes("__schema") || text.includes("types")) &&
+            text.includes("libro") &&
+            text.includes("query"),
+        },
+      };
+
+      function setExerciseFeedback(slideId, message, isSuccess) {
+        const feedback = document.getElementById(`feedback-${slideId}`);
+        if (!feedback) return;
+        feedback.textContent = message;
+        feedback.classList.remove("success", "error", "pending");
+        feedback.classList.add(isSuccess ? "success" : "error");
+      }
+
+      function updateNavButtons() {
+        prevBtn.disabled = currentSlide === 0;
+        const activeSlide = slides[currentSlide];
+        const requiresValidation =
+          activeSlide.dataset.requiresCheck === "true" &&
+          !completedExercises.has(activeSlide.id);
+        nextBtn.disabled = currentSlide === totalSlides - 1 || requiresValidation;
+        nextBtn.textContent = requiresValidation
+          ? "Valida para continuar"
+          : "Siguiente ?";
+
+        if (requiresValidation) {
+          const feedback = document.getElementById(`feedback-${activeSlide.id}`);
+          if (feedback && !feedback.textContent) {
+            feedback.textContent =
+              "Pega el resultado esperado y presiona 'Validar resultado' para habilitar el avance.";
+            feedback.classList.remove("success", "error");
+            feedback.classList.add("pending");
+          }
+        }
+      }
 
       // Respuestas correctas del quiz
       const answers = { 1: "b", 2: "c", 3: "b" };
       const feedbackText = {
         "1-b":
-          "✅ ¡Correcto! Las mutations son para crear/actualizar/borrar datos.",
-        "1-a": "❌ Query es para leer datos, no para modificarlos.",
-        "1-c": "❌ Subscription es para recibir eventos en tiempo real.",
-        "1-d": "❌ Resolver es una función interna del servidor.",
+          "? ¡Correcto! Las mutations son para crear/actualizar/borrar datos.",
+        "1-a": "? Query es para leer datos, no para modificarlos.",
+        "1-c": "? Subscription es para recibir eventos en tiempo real.",
+        "1-d": "? Resolver es una función interna del servidor.",
         "2-c":
-          "✅ ¡Exacto! En GraphQL, el cliente especifica exactamente los campos que necesita.",
-        "2-a": "❌ En REST, el servidor decide. En GraphQL, el cliente.",
+          "? ¡Exacto! En GraphQL, el cliente especifica exactamente los campos que necesita.",
+        "2-a": "? En REST, el servidor decide. En GraphQL, el cliente.",
         "2-b":
-          "❌ No, la BD solo almacena datos. GraphQL los expone como el cliente los pide.",
+          "? No, la BD solo almacena datos. GraphQL los expone como el cliente los pide.",
         "2-d":
-          "❌ El schema define qué se puede pedir, pero el cliente decide qué pide.",
+          "? El schema define qué se puede pedir, pero el cliente decide qué pide.",
         "3-b":
-          "✅ ¡Clave! GraphQL actúa como un API Gateway que agrega múltiples servicios.",
+          "? ¡Clave! GraphQL actúa como un API Gateway que agrega múltiples servicios.",
         "3-a":
-          "❌ Al contrario, GraphQL se usa como capa que conecta microservicios.",
-        "3-c": "❌ No acelera BD. Optimiza la comunicación cliente-servidor.",
+          "? Al contrario, GraphQL se usa como capa que conecta microservicios.",
+        "3-c": "? No acelera BD. Optimiza la comunicación cliente-servidor.",
         "3-d":
-          "❌ GraphQL normalmente se usa sobre HTTP (aunque también WebSocket para subscriptions).",
+          "? GraphQL normalmente se usa sobre HTTP (aunque también WebSocket para subscriptions).",
       };
       const answeredQuestions = {};
 
@@ -1097,6 +1442,41 @@
         });
       });
 
+      document.querySelectorAll("[data-check]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const slideId = btn.dataset.check;
+          const textarea = document.querySelector(
+            `.answer-box[data-exercise="${slideId}"]`,
+          );
+          const validator = exerciseValidators[slideId];
+          const value = normalizeText(textarea.value);
+
+          if (!value) {
+            setExerciseFeedback(
+              slideId,
+              "Pega el resultado del ejercicio antes de validar.",
+              false,
+            );
+            return;
+          }
+
+          if (!validator.test(value)) {
+            setExerciseFeedback(
+              slideId,
+              "El contenido no coincide con lo esperado para este ejercicio.",
+              false,
+            );
+            return;
+          }
+
+          completedExercises.add(slideId);
+          textarea.disabled = true;
+          btn.disabled = true;
+          setExerciseFeedback(slideId, validator.success, true);
+          updateNavButtons();
+        });
+      });
+
       function goToSlide(n) {
         slides[currentSlide].classList.remove("active");
         currentSlide = Math.max(0, Math.min(n, totalSlides - 1));
@@ -1105,12 +1485,15 @@
           `${currentSlide + 1} / ${totalSlides}`;
         document.getElementById("progress-bar").style.width =
           `${((currentSlide + 1) / totalSlides) * 100}%`;
+        updateNavButtons();
       }
 
       function nextSlide() {
+        if (nextBtn.disabled) return;
         goToSlide(currentSlide + 1);
       }
       function prevSlide() {
+        if (prevBtn.disabled) return;
         goToSlide(currentSlide - 1);
       }
 
@@ -1123,3 +1506,4 @@
     </script>
   </body>
 </html>
+
