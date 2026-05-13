@@ -569,22 +569,75 @@
               <strong>exactamente</strong> los campos que pedimos.
             </div>
           </div>
-          <div class="card" style="border: 1px solid var(--border)">
-            <div class="step-title" style="color: var(--green)">
-              <span class="step-number" style="background: var(--green)"
+          <div
+            class="card"
+            style="
+              border: 1px solid var(--border);
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            "
+          >
+            <div class="step-title" style="color: var(--cyan)">
+              <span class="step-number" style="background: var(--cyan)"
                 >?</span
               >
-              Resultado esperado
+              ¿Qué pasaría sin GraphQL?
             </div>
-            <div class="code-block" style="font-size: 11px">
+            <div
+              style="
+                font-size: 11px;
+                font-family: 'JetBrains Mono', monospace;
+                color: var(--pink);
+                letter-spacing: 1px;
+                text-transform: uppercase;
+              "
+            >
+              REST tradicional
+            </div>
+            <div class="code-block" style="font-size: 11px; padding: 12px 16px">
+              GET /usuarios/1
+            </div>
+            <div class="code-block" style="font-size: 10px; line-height: 1.65; padding: 14px 16px">
               {
-              <span class="str">"data"</span>: {
-              <span class="str">"libros"</span>: [ {
-              <span class="str">"titulo"</span>:
-              <span class="str">"El Problema de los Tres Cuerpos"</span>,
-              <span class="str">"autor"</span>:
-              <span class="str">"Liu Cixin"</span>
-              }, ... ] } }
+              <span class="str">"id"</span>: 1,
+              <span class="str">"nombre"</span>: <span class="str">"Ana"</span>,
+              <span class="str">"correo"</span>: <span class="str">"ana@gmail.com"</span>,
+              <span class="str">"telefono"</span>: <span class="str">"123456"</span>,
+              <span class="str">"direccion"</span>: <span class="str">"Bogotá"</span>,
+              <span class="str">"fechaNacimiento"</span>: <span class="str">"1999-01-01"</span>,
+              <span class="str">"universidad"</span>: <span class="str">"..."</span>
+              }
+            </div>
+            <div class="warning-box" style="margin-top: 0">
+              <strong style="display: block; margin-bottom: 8px"
+                >❌ Pero yo solo quería:</strong
+              >
+              <div
+                class="code-block"
+                style="
+                  font-size: 10px;
+                  line-height: 1.6;
+                  padding: 12px 16px;
+                  border-color: rgba(255, 71, 87, 0.35);
+                "
+              >
+                {
+                <span class="str">"nombre"</span>: <span class="str">"Ana"</span>
+                }
+              </div>
+            </div>
+            <div
+              style="
+                font-size: 13px;
+                line-height: 1.55;
+                color: var(--muted);
+                border-left: 3px solid var(--cyan);
+                padding-left: 12px;
+              "
+            >
+              <strong style="color: var(--cyan)">Esto se llama over-fetching:</strong>
+              el servidor devuelve más información de la necesaria.
             </div>
           </div>
         </div>
